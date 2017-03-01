@@ -38,23 +38,31 @@
         }
 
         function unsubscribe(name, fn) {
+            validate(name, fn);
             if (!subscriptions[name]) return true;
-
             subscriptions[name].splice(subscriptions[name].indexOf(fn), 1);
+        }
+        
+        function validate(name, fn) {
+            if (!name || typeof name != 'string') {
+                throw new Error('event name is required');
+            }
+
+            if (!fn || !(fn instanceof Function)) {
+                throw new Error('callback function is required');
+            }
         }
     }
 
-    if(angular) {
-        angular.module('angular-event-handler', []).service('$eventHandler', function () {
-            return new EventHandler();
-        });
-    }
-
-    if(module) {
-        module.exports = new EventHandler();
-    }
-
-    if(window) {
+    if(typeof window != "undefined") {
         window.EventHandler = EventHandler;
+
+        if(window.angular) {
+            angular.module('angular-event-handler', []).service('$eventHandler', EventHandler);
+        }
+    }
+
+    if(typeof module != "undefined") {
+        module.exports = new EventHandler();
     }
 })();
