@@ -8,10 +8,7 @@
         this.unsubscribe = unsubscribe;
 
         function subscribe(eventName, fn, $scope) {
-            if (!eventName) {
-                console.error('event name is required');
-                return;
-            }
+            validate(eventName, fn);
 
             //TODO: support of array with names to subscribe on multiple events
             _subscribe(eventName);
