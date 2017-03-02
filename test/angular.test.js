@@ -189,7 +189,7 @@ describe('test angular module', function () {
             expect(savedDestroyCallback).toEqual(null);
 
             //when: init controller
-            var controller = $controller('EventController', { $scope: $scope, $eventHandler: $eventHandler });
+            var controller = $controller('EventController', { $scope: $scope });
 
             //then:
             expect(controller.getResult()).toEqual(false);
@@ -210,6 +210,7 @@ describe('test angular module', function () {
 
             //when: emulating $destroy action of angular $scope
             savedDestroyCallback();
+            $eventHandler.fire('test-event');
 
             //then: nothing happens
             expect(controller.getResult()).toEqual(newResult);
