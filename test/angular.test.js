@@ -233,7 +233,7 @@ describe('test angular module', function () {
             $eventHandler.fire(EVENT_NAME);
 
             //then:
-            expect(result).toEqual(5);
+            expect(result).toEqual(50);
         });
 
         it('if nothing to fire', function () {
