@@ -3,7 +3,10 @@ describe('test angular module', function () {
     const EVENT_NAME_2 = 'ev2';
     var $eventHandler;
     var $controller;
-    var obj = {name: 'test'};
+    var user = {
+        id: 1,
+        name: 'John'
+    };
 
     beforeEach(module('test-app'));
     beforeEach(module('angular-event-handler'));
@@ -112,7 +115,7 @@ describe('test angular module', function () {
 
         it('object instead of event name', function () {
             expect(function () {
-                $eventHandler.subscribe(obj, function () {});
+                $eventHandler.subscribe(user, function () {});
             }).toThrow();
         });
 
@@ -124,7 +127,7 @@ describe('test angular module', function () {
 
         it('object instead of callback function', function () {
             expect(function () {
-                $eventHandler.subscribe(EVENT_NAME, obj)
+                $eventHandler.subscribe(EVENT_NAME, user)
             }).toThrow();
         });
     });
@@ -144,7 +147,7 @@ describe('test angular module', function () {
 
         it('object instead of event name', function () {
             expect(function () {
-                $eventHandler.unsubscribe(obj, function () {});
+                $eventHandler.unsubscribe(user, function () {});
             }).toThrow();
         });
 
@@ -156,7 +159,7 @@ describe('test angular module', function () {
 
         it('object instead of callback function', function () {
             expect(function () {
-                $eventHandler.unsubscribe(EVENT_NAME, obj)
+                $eventHandler.unsubscribe(EVENT_NAME, user)
             }).toThrow();
         });
 
@@ -235,6 +238,111 @@ describe('test angular module', function () {
 
             //then:
             expect(result).toEqual(5);
+        });
+
+        it('with data: number', function () {
+            //given:
+            var result = null;
+
+            $eventHandler.subscribe(EVENT_NAME, function (data) {
+                result = data;
+            });
+
+            //when:
+            $eventHandler.fire(EVENT_NAME, 22);
+
+            //then:
+            expect(result).toEqual(22);
+        });
+
+        it('with data: 0 number', function () {
+            //given:
+            var result = null;
+
+            $eventHandler.subscribe(EVENT_NAME, function (data) {
+                result = data;
+            });
+
+            //when:
+            $eventHandler.fire(EVENT_NAME, 0);
+
+            //then:
+            expect(result).toEqual(0);
+        });
+
+        it('with data: empty string', function () {
+            //given:
+            var result = null;
+
+            $eventHandler.subscribe(EVENT_NAME, function (data) {
+                result = data;
+            });
+
+            //when:
+            $eventHandler.fire(EVENT_NAME, '');
+
+            //then:
+            expect(result).toEqual('');
+        });
+
+        it('with data: object', function () {
+            //given:
+            var result = null;
+
+            $eventHandler.subscribe(EVENT_NAME, function (data) {
+                result = data;
+            });
+
+            //when:
+            $eventHandler.fire(EVENT_NAME, user);
+
+            //then:
+            expect(result).toEqual(user);
+            expect(result.id).toEqual(1);
+            expect(result.name).toEqual('John');
+        });
+
+        it('with data: shared between subscribers', function () {
+            //given:
+            var data = {
+                counter: 0
+            };
+
+            $eventHandler.subscribe(EVENT_NAME, function (data) {
+                data.counter++
+            });
+
+            //when:
+            $eventHandler.fire(EVENT_NAME, data);
+            $eventHandler.fire(EVENT_NAME, data);
+            $eventHandler.fire(EVENT_NAME, data);
+
+            //then:
+            expect(data.counter).toEqual(3);
+        });
+
+        it('if one of the callbacks throws the exception', function () {
+            //given:
+            var data = {
+                counter: 0
+            };
+
+            //when:
+            $eventHandler.subscribe(EVENT_NAME, function (data) {
+                data.counter++
+            });
+
+            $eventHandler.subscribe(EVENT_NAME, function (data) {
+                throw new Error('something went wrong inside one of the subscribers')
+            });
+
+            //when:
+            expect(function () {
+                $eventHandler.fire(EVENT_NAME, data)
+            }).toThrow();
+
+            //then:
+            expect(data.counter).toEqual(1);
         });
 
         it('if nothing to fire', function () {

@@ -30,7 +30,7 @@
             if (!subscriptions[name]) return;
 
             subscriptions[name].forEach(function (fn) {
-                fn(args || {}); // empty object can be used as a shared storage
+                fn(args != undefined ? args : {}); // empty object can be used as a shared storage
             });
         }
 
