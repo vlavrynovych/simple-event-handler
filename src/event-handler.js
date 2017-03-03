@@ -7,11 +7,26 @@
         this.fire = fire;
         this.unsubscribe = unsubscribe;
 
-        function subscribe(eventName, fn, $scope) {
-            validate(eventName, fn);
+        function subscribe(events, fn, $scope) {
+            validateCallback(fn);
 
-            //TODO: support of array with names to subscribe on multiple events
-            _subscribe(eventName);
+            if(events) {
+                if(typeof events == 'string') {
+                    validateName(events);
+                    _subscribe(events);
+                } else if(events instanceof Array) {
+                    if(!events.length) {
+                        throwNameError();
+                    }
+
+                    events.forEach(validateName);
+                    events.forEach(_subscribe);
+                } else {
+                    throwNameError();
+                }
+            } else {
+                throwNameError();
+            }
 
             function _subscribe(name) {
                 if (!subscriptions[name]) {
@@ -35,19 +50,26 @@
         }
 
         function unsubscribe(name, fn) {
-            validate(name, fn);
+            validateName(name);
+            validateCallback(fn);
             if (!subscriptions[name]) return true;
             subscriptions[name].splice(subscriptions[name].indexOf(fn), 1);
         }
         
-        function validate(name, fn) {
+        function validateName(name) {
             if (!name || typeof name != 'string') {
-                throw new Error('event name is required');
+                throwNameError();
             }
+        }
 
+        function validateCallback(fn) {
             if (!fn || !(fn instanceof Function)) {
                 throw new Error('callback function is required');
             }
+        }
+
+        function throwNameError() {
+            throw new Error('event name is required');
         }
     }
 

@@ -1,12 +1,10 @@
 describe('test angular module', function () {
     const EVENT_NAME = 'ev1';
     const EVENT_NAME_2 = 'ev2';
+    const user = { id: 1, name: 'John' };
+
     var $eventHandler;
     var $controller;
-    var user = {
-        id: 1,
-        name: 'John'
-    };
 
     beforeEach(module('test-app'));
     beforeEach(module('angular-event-handler'));
@@ -128,6 +126,70 @@ describe('test angular module', function () {
         it('object instead of callback function', function () {
             expect(function () {
                 $eventHandler.subscribe(EVENT_NAME, user)
+            }).toThrow();
+        });
+
+        it('multi-subscribe: success', function () {
+            //given:
+            var result = false;
+            var handler = function () { result = true; };
+
+            //when:
+            $eventHandler.subscribe([EVENT_NAME, EVENT_NAME_2], handler);
+
+            //then: default state
+            expect(result).toEqual(false);
+
+            //when:
+            $eventHandler.fire(EVENT_NAME);
+
+            //then:
+            expect(result).toEqual(true);
+
+            //when: reset result and fire second event
+            result = false;
+            $eventHandler.fire(EVENT_NAME_2);
+
+            //then:
+            expect(result).toEqual(true);
+
+            //when:
+            result = false;
+            $eventHandler.unsubscribe(EVENT_NAME, handler);
+            $eventHandler.unsubscribe(EVENT_NAME_2, handler);
+            //and:
+            $eventHandler.fire(EVENT_NAME);
+            $eventHandler.fire(EVENT_NAME_2);
+
+            //then:
+            expect(result).toEqual(false);
+        });
+
+        it('multi-subscribe: fail', function () {
+            //given:
+            var result = false;
+            var handler = function () { result = true; };
+
+            //when: incorrect name
+            expect(function () {
+                $eventHandler.subscribe([EVENT_NAME, null], handler);
+            }).toThrow();
+
+            expect(function () {
+                $eventHandler.subscribe([EVENT_NAME, ''], handler);
+            }).toThrow();
+
+            expect(function () {
+                $eventHandler.subscribe([EVENT_NAME, 1], handler);
+            }).toThrow();
+
+            expect(function () {
+                $eventHandler.subscribe([EVENT_NAME, 0], handler);
+            }).toThrow();
+
+            //when: empty array
+            expect(function () {
+                $eventHandler.subscribe([], handler);
             }).toThrow();
         });
     });
