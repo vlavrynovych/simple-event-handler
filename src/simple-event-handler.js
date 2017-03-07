@@ -4,8 +4,13 @@
         var subscriptions = {};
 
         this.subscribe = subscribe;
+        this.on = subscribe;
+
         this.fire = fire;
+        this.emit = fire;
+
         this.unsubscribe = unsubscribe;
+        this.off = unsubscribe;
 
         function subscribe(events, fn, $scope) {
             validateCallback(fn);

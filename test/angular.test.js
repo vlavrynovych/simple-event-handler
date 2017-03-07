@@ -35,6 +35,27 @@ describe('test angular module', function () {
             expect(result).toEqual(false);
         });
 
+        it('smoke test .on .off .emit', function () {
+            //given:
+            var result = false;
+            var handler = function () { result = true; };
+
+            //when:
+            $eventHandler.on(EVENT_NAME, handler);
+            $eventHandler.emit(EVENT_NAME);
+
+            //then:
+            expect(result).toEqual(true);
+
+            //when:
+            $eventHandler.off(EVENT_NAME, handler);
+            result = false;
+            $eventHandler.emit(EVENT_NAME);
+
+            //then:
+            expect(result).toEqual(false);
+        });
+
         it('two handlers: same event', function () {
             //given:
             var result = 0;

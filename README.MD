@@ -23,8 +23,11 @@ Event handler library for both: **front-end** and **back-end**
 - [Examples](#examples)
 - [Documentation](#documentation)
     - [#subscribe(eventName, handler)](#subscribe)
-    - [#fire(eventName)](#fire)
+    - [#fire(eventName, args)](#fire)
     - [#unsubscribe(eventName, handler)](#unsubscribe)
+    - [#on(eventName, handler)](#on)
+    - [#emit(eventName)](#emit)
+    - [#off(eventName, handler)](#off)
 
 - [License](#license)
 
@@ -197,6 +200,18 @@ eventHandler.fire('my-event');
 
 eventHandler.unsubscribe('my-event', handler)
 ```
+
+## on
+
+Alias for [#subscribe(eventName, handler)](#subscribe)
+
+## emit
+
+Alias for [#fire(eventName, args)](#fire)
+
+## off
+
+Alias for [#unsubscribe(eventName, handler)](#unsubscribe)
 
 # License
 
