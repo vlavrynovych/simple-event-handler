@@ -22,6 +22,9 @@ Event handler library for both: **front-end** and **back-end**
     - [npm](#npm)
 - [Examples](#examples)
 - [Documentation](#documentation)
+    - [#subscribe(eventName, handler)](#subscribe)
+    - [#fire(eventName)](#fire)
+    - [#unsubscribe(eventName, handler)](#unsubscribe)
 
 - [License](#license)
 
@@ -107,7 +110,93 @@ eventHandler.fire('my-event', args);
 ```
 
 # Documentation
-//TODO
+
+## subscribe
+
+Registers new handler function to subscription list for the event named `eventName`.
+The handler will be added to the end of the subscription list.
+
+**Params**
+
+| Name | Type | Description |
+|:-----|:----:|:-----|
+| eventName | `String|Array` | String or array of strings with event name(s) |
+| handler | `Function` | Function with your logic which will be called once event(s) is fired |
+
+Handler function has one input parameter with data object which can be passed via [#fire(eventName, handler)](#fire) method
+
+###### Example
+
+**Basic subscription**
+
+```js
+eventHandler.subscribe('my-event', function(data) {
+    // your logic here
+})
+```
+
+**Multi-subscription**
+
+```js
+var events = ['ev1', 'ev2', 'custom-event', 'service:update'];
+
+eventHandler.subscribe(events, function(data) {
+    // your logic here
+})
+```
+
+
+## fire
+
+Synchronously calls each of the handlers registered for the event named `eventName`,
+in the order they were registered, passing the supplied arguments to each,
+empty object will be passed instead if nothing provided
+
+| Name | Type | Description |
+|:-----|:----:|:-----|
+| eventName | `String` | Event name to fire |
+| args | `*` | args that will be passed to each handler function. Can be used as shared resource if it is not a primitive value. Default: `{}` |
+
+###### Example
+
+```js
+eventHandler.subscribe('report:update', function(data) {
+    // your logic here
+    console.log(data.id); // --> 44
+})
+
+var report = {
+    id: 44,
+    title: 'Cost Report',
+    isPrivate: false,
+    storeInDB: false
+};
+
+eventHandler.fire('report:update', report);
+```
+
+## unsubscribe
+
+Removes registered handler function from subscription list
+
+| Name | Type | Description |
+|:-----|:----:|:-----|
+| eventName | `String` | Event name on which handler was subscribed |
+| handler | `Function` | Handler function which should be removed from subscription list |
+
+###### Example
+
+```js
+var handler = function(data) {
+  // your logic here
+}
+
+eventHandler.subscribe('my-event', handler);
+
+eventHandler.fire('my-event');
+
+eventHandler.unsubscribe('my-event', handler)
+```
 
 # License
 
