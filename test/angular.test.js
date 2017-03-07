@@ -215,47 +215,116 @@ describe('test angular module', function () {
         });
     });
 
-    describe('$eventHandler#unsubscribe', function () {
+    describe('$eventHandler#once', function () {
+        it('should be executed only one time', function () {
+            //given:
+            var result = 0;
+
+            $eventHandler.once(EVENT_NAME, function () {
+                result++;
+            });
+
+            //when:
+            $eventHandler.fire(EVENT_NAME);
+
+            //then:
+            expect(result).toEqual(1);
+
+            //when:
+            $eventHandler.fire(EVENT_NAME);
+
+            //then:
+            expect(result).toEqual(1);
+        });
+
         it('without parameters', function () {
             expect(function () {
-                $eventHandler.unsubscribe();
+                $eventHandler.once();
             }).toThrow();
         });
 
         it('without event name', function () {
             expect(function () {
-                $eventHandler.unsubscribe(null, function () {});
+                $eventHandler.once(null, function () {});
             }).toThrow();
         });
 
         it('object instead of event name', function () {
             expect(function () {
-                $eventHandler.unsubscribe(user, function () {});
+                $eventHandler.once(user, function () {});
             }).toThrow();
         });
 
         it('without callback function', function () {
             expect(function () {
-                $eventHandler.unsubscribe(EVENT_NAME)
+                $eventHandler.once(EVENT_NAME)
             }).toThrow();
         });
 
         it('object instead of callback function', function () {
             expect(function () {
-                $eventHandler.unsubscribe(EVENT_NAME, user)
+                $eventHandler.once(EVENT_NAME, user)
             }).toThrow();
         });
 
-        it('if nothing to unsubscribe', function () {
-            expect(function () {
-                $eventHandler.unsubscribe(EVENT_NAME, function () {})
-            }).not.toThrow();
+        it('multi-subscribe: success', function () {
+            //given:
+            var result = false;
+            var handler = function () { result = true; };
+
+            //when:
+            $eventHandler.once([EVENT_NAME, EVENT_NAME_2], handler);
+
+            //then: default state
+            expect(result).toEqual(false);
+
+            //when:
+            $eventHandler.fire(EVENT_NAME);
+
+            //then:
+            expect(result).toEqual(true);
+
+            //when: reset result and fire second event
+            result = false;
+            $eventHandler.fire(EVENT_NAME_2);
+
+            //then:
+            expect(result).toEqual(true);
+
+            //when:
+            result = false;
+            $eventHandler.fire(EVENT_NAME);
+            $eventHandler.fire(EVENT_NAME_2);
+
+            //then:
+            expect(result).toEqual(false);
         });
 
-        it('if everything is fine', function () {
+        it('multi-subscribe: fail', function () {
+            //given:
+            var handler = function () {};
+
+            //when: incorrect name
             expect(function () {
-                $eventHandler.unsubscribe(EVENT_NAME, function () {})
-            }).not.toThrow();
+                $eventHandler.once([EVENT_NAME, null], handler);
+            }).toThrow();
+
+            expect(function () {
+                $eventHandler.once([EVENT_NAME, ''], handler);
+            }).toThrow();
+
+            expect(function () {
+                $eventHandler.once([EVENT_NAME, 1], handler);
+            }).toThrow();
+
+            expect(function () {
+                $eventHandler.once([EVENT_NAME, 0], handler);
+            }).toThrow();
+
+            //when: empty array
+            expect(function () {
+                $eventHandler.once([], handler);
+            }).toThrow();
         });
     });
 

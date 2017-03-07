@@ -12,37 +12,75 @@
         this.unsubscribe = unsubscribe;
         this.off = unsubscribe;
 
+        this.once = once;
+
         function subscribe(events, fn, $scope) {
             validateCallback(fn);
 
             if(events) {
                 if(typeof events == 'string') {
                     validateName(events);
-                    _subscribe(events);
+                    _subscribe(events, fn, $scope);
                 } else if(events instanceof Array) {
                     if(!events.length) {
                         throwNameError();
                     }
 
                     events.forEach(validateName);
-                    events.forEach(_subscribe);
+                    events.forEach(function (eventName) {
+                        _subscribe(eventName, fn, $scope);
+                    });
                 } else {
                     throwNameError();
                 }
             } else {
                 throwNameError();
             }
+        }
 
-            function _subscribe(name) {
-                if (!subscriptions[name]) {
-                    subscriptions[name] = [];
+        function _subscribe(name, fn, $scope) {
+            if (!subscriptions[name]) {
+                subscriptions[name] = [];
+            }
+
+            subscriptions[name].push(fn);
+
+            $scope && $scope.$on && $scope.$on('$destroy', function () {
+                unsubscribe(name, fn);
+            });
+        }
+
+        function once(events, fn, $scope) {
+            validateCallback(fn);
+
+            if(events) {
+                if(typeof events == 'string') {
+                    validateName(events);
+
+                    var handler = function () {
+                        fn();
+                        unsubscribe(events, handler);
+                    };
+                    _subscribe(events, handler, $scope);
+                } else if(events instanceof Array) {
+                    if(!events.length) {
+                        throwNameError();
+                    }
+
+                    events.forEach(validateName);
+                    events.forEach(function (eventName) {
+                        var handler = function () {
+                            fn();
+                            unsubscribe(eventName, handler);
+                        };
+
+                        _subscribe(eventName, handler, $scope);
+                    });
+                } else {
+                    throwNameError();
                 }
-
-                subscriptions[name].push(fn);
-
-                $scope && $scope.$on && $scope.$on('$destroy', function () {
-                    unsubscribe(name, fn);
-                });
+            } else {
+                throwNameError();
             }
         }
 
