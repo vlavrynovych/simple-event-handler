@@ -1,5 +1,5 @@
 angular
-    .module('test-app', ['angular-event-handler'])
+    .module('test-app', ['simple-event-handler'])
     .controller('EventController', ['$scope', '$eventHandler', function ($scope, $eventHandler) {
         var res = false;
 

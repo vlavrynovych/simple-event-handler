@@ -7,7 +7,7 @@ describe('test angular module', function () {
     var $controller;
 
     beforeEach(module('test-app'));
-    beforeEach(module('angular-event-handler'));
+    beforeEach(module('simple-event-handler'));
     beforeEach(inject(function(_$eventHandler_, _$controller_){
         $eventHandler = _$eventHandler_;
         $controller = _$controller_;

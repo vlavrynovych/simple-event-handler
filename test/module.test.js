@@ -1,4 +1,4 @@
-var eventHandler = require('../src/event-handler');
+var eventHandler = require('../src/simple-event-handler');
 var assert = require('assert');
 
 /**

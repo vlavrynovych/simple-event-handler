@@ -77,7 +77,7 @@
         window.EventHandler = EventHandler;
 
         if(window.angular) {
-            angular.module('angular-event-handler', []).service('$eventHandler', EventHandler);
+            angular.module('simple-event-handler', []).service('$eventHandler', EventHandler);
         }
     }
 

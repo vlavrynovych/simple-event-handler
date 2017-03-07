@@ -1,8 +1,8 @@
 {
-  "name": "event-handler",
+  "name": "simple-event-handler",
   "version": "0.1.0",
   "description": "Event handler library for both: frontend and backend",
-  "main": "src/event-handler.js",
+  "main": "src/simple-event-handler.js",
   "scripts": {
     "test": "node_modules/karma/bin/karma start karma.conf.js && node_modules/mocha/bin/mocha -R spec test/module.test.js"
   },
