@@ -1,0 +1,28 @@
+{
+  "name": "simple-event-handler",
+  "description": "Event handler library for both: front-end and back-end",
+  "main": "dist/simple-event-handler.min.js",
+  "authors": [
+    "Volodymyr Lavrynovych <volodyalavrynovych@gmail.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "event",
+    "handler",
+    "subscriber",
+    "subscription"
+  ],
+  "homepage": "https://github.com/vlavrynovych/simple-event-handler",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "src",
+    "_config.yml",
+    "gulpfile.js",
+    "karma.conf.js",
+    ".travis.yml"
+  ]
+}
