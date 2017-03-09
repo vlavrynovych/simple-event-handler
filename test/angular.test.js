@@ -237,6 +237,22 @@ describe('test angular module', function () {
             expect(result).toEqual(1);
         });
 
+        it('should unsubscribe even on fail', function () {
+            //given:
+            $eventHandler.once(EVENT_NAME, function () {
+                throw new Error('error')
+            });
+
+            //when:
+            expect(function () {
+                $eventHandler.fire(EVENT_NAME);
+            }).toThrow();
+
+            expect(function () {
+                $eventHandler.fire(EVENT_NAME);
+            }).not.toThrow();
+        });
+
         it('without parameters', function () {
             expect(function () {
                 $eventHandler.once();
@@ -302,7 +318,9 @@ describe('test angular module', function () {
 
         it('multi-subscribe: fail', function () {
             //given:
-            var handler = function () {};
+            var handler = function () {
+                throw new Error('error');
+            };
 
             //when: incorrect name
             expect(function () {
@@ -325,6 +343,23 @@ describe('test angular module', function () {
             expect(function () {
                 $eventHandler.once([], handler);
             }).toThrow();
+
+            $eventHandler.once([EVENT_NAME, EVENT_NAME_2], handler);
+            expect(function () {
+                $eventHandler.fire(EVENT_NAME);
+            }).toThrow();
+
+            expect(function () {
+                $eventHandler.fire(EVENT_NAME);
+            }).not.toThrow();
+
+            expect(function () {
+                $eventHandler.fire(EVENT_NAME_2);
+            }).toThrow();
+
+            expect(function () {
+                $eventHandler.fire(EVENT_NAME_2);
+            }).not.toThrow();
         });
     });
 
@@ -370,6 +405,15 @@ describe('test angular module', function () {
             //then: nothing happens
             expect(controller.getResult()).toEqual(newResult);
         });
+    });
+
+    describe('$eventHandler#unsubscribe', function () {
+        it('event without subscriptions', function () {
+            expect(function () {
+                $eventHandler.unsubscribe(EVENT_NAME, function () {});
+            }).not.toThrow();
+        })
+
     });
 
     describe('$eventHandler#fire', function () {

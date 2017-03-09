@@ -22,9 +22,10 @@ Event handler library for both: **front-end** and **back-end**
     - [npm](#npm)
 - [Examples](#examples)
 - [Documentation](#documentation)
-    - [#subscribe(eventName, handler)](#subscribe)
+    - [#subscribe(eventName, handler, $scope)](#subscribe)
     - [#fire(eventName, args)](#fire)
     - [#unsubscribe(eventName, handler)](#unsubscribe)
+    - [#once(eventName, handler, $scope)](#once)
     - [#on(eventName, handler)](#on)
     - [#emit(eventName)](#emit)
     - [#off(eventName, handler)](#off)
@@ -123,8 +124,9 @@ The handler will be added to the end of the subscription list.
 
 | Name | Type | Description |
 |:-----|:----:|:-----|
-| eventName | `String|Array` | String or array of strings with event name(s) |
+| eventName | `String|Array<String>` | String or array of strings with event name(s) |
 | handler | `Function` | Function with your logic which will be called once event(s) is fired |
+| $scope | `Object` | AngularJS $scope object |
 
 Handler function has one input parameter with data object which can be passed via [#fire(eventName, handler)](#fire) method
 
@@ -199,6 +201,41 @@ eventHandler.subscribe('my-event', handler);
 eventHandler.fire('my-event');
 
 eventHandler.unsubscribe('my-event', handler)
+```
+
+## once
+
+Adds a one time handler function for the event named `eventName`.
+Handler will be removed from subscription list after first execution
+
+**Params**
+
+| Name | Type | Description |
+|:-----|:----:|:-----|
+| eventName | `String|Array<String>` | String or array of strings with event name(s) |
+| handler | `Function` | Function with your logic which will be called once event(s) is fired |
+| $scope | `Object` | AngularJS $scope object |
+
+Handler function has one input parameter with data object which can be passed via [#fire(eventName, handler)](#fire) method
+
+###### Example
+
+**Basic subscription**
+
+```js
+eventHandler.once('my-event', function(data) {
+    // your logic here
+})
+```
+
+**Multi-subscription**
+
+```js
+var events = ['ev1', 'ev2', 'custom-event', 'service:update'];
+
+eventHandler.once(events, function(data) {
+    // your logic here
+})
 ```
 
 ## on

@@ -58,8 +58,8 @@
                     validateName(events);
 
                     var handler = function () {
-                        fn();
                         unsubscribe(events, handler);
+                        fn();
                     };
                     _subscribe(events, handler, $scope);
                 } else if(events instanceof Array) {
@@ -70,8 +70,8 @@
                     events.forEach(validateName);
                     events.forEach(function (eventName) {
                         var handler = function () {
-                            fn();
                             unsubscribe(eventName, handler);
+                            fn();
                         };
 
                         _subscribe(eventName, handler, $scope);
@@ -95,7 +95,7 @@
         function unsubscribe(name, fn) {
             validateName(name);
             validateCallback(fn);
-            if (!subscriptions[name]) return true;
+            if (!subscriptions[name]) return;
             subscriptions[name].splice(subscriptions[name].indexOf(fn), 1);
         }
         
