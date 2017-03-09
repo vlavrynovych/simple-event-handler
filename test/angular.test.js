@@ -599,4 +599,41 @@ describe('test angular module', function () {
             }).not.toThrow();
         });
     });
+
+    describe('$eventHandler: method chaining', function () {
+        it('should be executed only one time', function () {
+            //given:
+            var result = 0;
+            var handler = function (data) {
+                result = result + data;
+            };
+
+            //when:
+            expect(function () {
+                $eventHandler
+                    .once(EVENT_NAME, function () {
+                        result++;
+                    })
+                    .fire(EVENT_NAME) // result = 1
+                    .fire(EVENT_NAME) // result = 1
+                    .subscribe(EVENT_NAME, handler)
+                    .emit(EVENT_NAME, 10) // result = 11
+                    .on(EVENT_NAME, function (data) {
+                        result = result * 2 - data;
+                    })
+                    .fire(EVENT_NAME, 5) // result = ((11 + 5) * 2) - 5 = 27
+                    .offAll(EVENT_NAME) // removes everything
+                    .emit(EVENT_NAME) // no handlers to execute
+                    .fire(EVENT_NAME) // no handlers to execute
+                    .on(EVENT_NAME_2, handler)
+                    .fire(EVENT_NAME_2, 3) // result = 27 + 3 = 30
+                    .unsubscribe(EVENT_NAME_2, handler)
+                    .fire(EVENT_NAME_2, 20); // no handlers to execute
+
+            }).not.toThrow();
+
+            //then:
+            expect(result).toEqual(30);
+        });
+    });
 });

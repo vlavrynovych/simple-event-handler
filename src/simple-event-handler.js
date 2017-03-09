@@ -39,6 +39,8 @@
             } else {
                 throwNameError();
             }
+
+            return this;
         }
 
         function _subscribe(name, fn, $scope) {
@@ -85,6 +87,8 @@
             } else {
                 throwNameError();
             }
+
+            return this;
         }
 
         function fire(name, args) {
@@ -93,6 +97,8 @@
             subscriptions[name].forEach(function (fn) {
                 fn(args != undefined ? args : {}); // empty object can be used as a shared storage
             });
+
+            return this;
         }
 
         function unsubscribe(name, fn) {
@@ -100,12 +106,14 @@
             validateCallback(fn);
             if (!subscriptions[name]) return;
             subscriptions[name].splice(subscriptions[name].indexOf(fn), 1);
+            return this;
         }
 
         function unsubscribeAll(name) {
             validateName(name);
             if (!subscriptions[name]) return;
             subscriptions[name] = [];
+            return this;
         }
         
         function validateName(name) {
