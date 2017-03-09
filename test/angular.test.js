@@ -115,7 +115,6 @@ describe('test angular module', function () {
             expect(ev1Called).toEqual(true);
             expect(ev2Called).toEqual(true);
         });
-
     });
 
     describe('$eventHandler#subscribe', function () {
@@ -408,12 +407,65 @@ describe('test angular module', function () {
     });
 
     describe('$eventHandler#unsubscribe', function () {
-        it('event without subscriptions', function () {
+        it('unsubscribe from event without subscriptions', function () {
             expect(function () {
                 $eventHandler.unsubscribe(EVENT_NAME, function () {});
             }).not.toThrow();
-        })
 
+            expect(function () {
+                $eventHandler.off(EVENT_NAME, function () {});
+            }).not.toThrow();
+        })
+    });
+
+    describe('$eventHandler#unsubscribeAll/#offAll', function () {
+        it('unsubscribe from event without subscriptions', function () {
+            expect(function () {
+                $eventHandler.unsubscribeAll(EVENT_NAME);
+            }).not.toThrow();
+
+            expect(function () {
+                $eventHandler.offAll(EVENT_NAME);
+            }).not.toThrow();
+        });
+
+        it('multi-subscribe and unsubscribe all', function () {
+            //given:
+            var result = 0;
+            var handler = function () { result = 1; };
+            var handler2 = function () { result = 2; };
+
+            //when:
+            $eventHandler.subscribe([EVENT_NAME, EVENT_NAME_2], handler);
+            $eventHandler.subscribe([EVENT_NAME, EVENT_NAME_2], handler2);
+
+            //then: default state
+            expect(result).toEqual(0);
+
+            //when:
+            $eventHandler.fire(EVENT_NAME);
+
+            //then:
+            expect(result).toEqual(2);
+
+            //when: reset result and fire second event
+            result = 0;
+            $eventHandler.fire(EVENT_NAME_2);
+
+            //then:
+            expect(result).toEqual(2);
+
+            //when:
+            result = 0;
+            $eventHandler.unsubscribeAll(EVENT_NAME);
+            $eventHandler.offAll(EVENT_NAME_2);
+            //and:
+            $eventHandler.fire(EVENT_NAME);
+            $eventHandler.fire(EVENT_NAME_2);
+
+            //then:
+            expect(result).toEqual(0);
+        });
     });
 
     describe('$eventHandler#fire', function () {

@@ -6,13 +6,16 @@
         this.subscribe = subscribe;
         this.on = subscribe;
 
+        this.once = once;
+
         this.fire = fire;
         this.emit = fire;
 
         this.unsubscribe = unsubscribe;
         this.off = unsubscribe;
 
-        this.once = once;
+        this.unsubscribeAll = unsubscribeAll;
+        this.offAll = unsubscribeAll;
 
         function subscribe(events, fn, $scope) {
             validateCallback(fn);
@@ -97,6 +100,12 @@
             validateCallback(fn);
             if (!subscriptions[name]) return;
             subscriptions[name].splice(subscriptions[name].indexOf(fn), 1);
+        }
+
+        function unsubscribeAll(name) {
+            validateName(name);
+            if (!subscriptions[name]) return;
+            subscriptions[name] = [];
         }
         
         function validateName(name) {

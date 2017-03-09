@@ -25,10 +25,12 @@ Event handler library for both: **front-end** and **back-end**
     - [#subscribe(eventName, handler, $scope)](#subscribe)
     - [#fire(eventName, args)](#fire)
     - [#unsubscribe(eventName, handler)](#unsubscribe)
+    - [#unsubscribeAll(eventName)](#unsubscribeall)
     - [#once(eventName, handler, $scope)](#once)
     - [#on(eventName, handler)](#on)
     - [#emit(eventName)](#emit)
     - [#off(eventName, handler)](#off)
+    - [#offAll(eventName)](#offall)
 
 - [License](#license)
 
@@ -203,6 +205,34 @@ eventHandler.fire('my-event');
 eventHandler.unsubscribe('my-event', handler)
 ```
 
+## unsubscribeAll
+
+Removes all the registered handler functions for the event named `eventName`
+
+| Name | Type | Description |
+|:-----|:----:|:-----|
+| eventName | `String` | Event name for which subscription list should be cleaned |
+
+###### Example
+
+```js
+eventHandler.subscribe('my-event', function() {
+    // handler #1
+});
+
+eventHandler.subscribe('my-event', function() {
+    // handler #2
+});
+
+eventHandler.subscribe('my-event', function() {
+    // handler #3
+});
+
+eventHandler.fire('my-event');
+
+eventHandler.unsubscribeAll('my-event')
+```
+
 ## once
 
 Adds a one time handler function for the event named `eventName`.
@@ -249,6 +279,10 @@ Alias for [#fire(eventName, args)](#fire)
 ## off
 
 Alias for [#unsubscribe(eventName, handler)](#unsubscribe)
+
+## offAll
+
+Alias for [#unsubscribeAll(eventName)](#unsubscribeall)
 
 # License
 
