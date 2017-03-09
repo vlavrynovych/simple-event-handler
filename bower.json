@@ -2,7 +2,7 @@
   "name": "simple-event-handler",
   "description": "Event handler library for both: front-end and back-end",
   "main": "dist/simple-event-handler.min.js",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "authors": [
     "Volodymyr Lavrynovych <volodyalavrynovych@gmail.com>"
   ],

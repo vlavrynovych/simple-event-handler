@@ -1,6 +1,6 @@
 {
   "name": "simple-event-handler",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "description": "Event handler library for both: frontend and backend",
   "main": "src/simple-event-handler.js",
   "scripts": {
