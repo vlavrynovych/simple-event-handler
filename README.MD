@@ -6,6 +6,7 @@
 [![Bower](https://img.shields.io/bower/v/simple-event-handler.svg)]()
 [![NPM Downloads][downloads-image]][downloads-url]
 [![Build Status](https://travis-ci.org/vlavrynovych/simple-event-handler.svg?branch=master)](https://travis-ci.org/vlavrynovych/simple-event-handler)
+[![Coverage Status](https://coveralls.io/repos/vlavrynovych/simple-event-handler/badge.svg?branch=develop)](https://coveralls.io/r/vlavrynovych/simple-event-handler?branch=develop)
 
 [![NPM](https://nodei.co/npm/simple-event-handler.png?downloads=true)](https://nodei.co/npm/simple-event-handler/)
 
