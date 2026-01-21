@@ -4,7 +4,8 @@
   "description": "Event handler library for both: frontend and backend",
   "main": "src/simple-event-handler.js",
   "scripts": {
-    "test": "node_modules/karma/bin/karma start karma.conf.js && node_modules/mocha/bin/mocha -R spec test/module.test.js"
+    "test": "node_modules/karma/bin/karma start karma.conf.js && node_modules/mocha/bin/mocha -R spec test/module.test.js",
+    "build": "gulp build"
   },
   "repository": {
     "type": "git",

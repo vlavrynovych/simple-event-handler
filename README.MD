@@ -5,7 +5,7 @@
 [![NPM Version][npm-image]][npm-url]
 [![Bower](https://img.shields.io/bower/v/simple-event-handler.svg)]()
 [![NPM Downloads][downloads-image]][downloads-url]
-[![Build Status](https://travis-ci.org/vlavrynovych/simple-event-handler.svg?branch=master)](https://travis-ci.org/vlavrynovych/simple-event-handler)
+[![Test](https://github.com/vlavrynovych/simple-event-handler/actions/workflows/test.yml/badge.svg)](https://github.com/vlavrynovych/simple-event-handler/actions/workflows/test.yml)
 [![Coverage Status](https://coveralls.io/repos/github/vlavrynovych/simple-event-handler/badge.svg?branch=develop)](https://coveralls.io/github/vlavrynovych/simple-event-handler?branch=develop)
 
 [![NPM](https://nodei.co/npm/simple-event-handler.png?downloads=true)](https://nodei.co/npm/simple-event-handler/)
