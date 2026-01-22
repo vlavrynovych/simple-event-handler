@@ -53,7 +53,7 @@ jobs:
         run: npm ci
 
       - name: Run tests with coverage
-        run: npm test
+        run: npm run test:coverage
         continue-on-error: true
 
       - name: Upload coverage to Coveralls

@@ -4,7 +4,10 @@
   "description": "Event handler library for both: frontend and backend",
   "main": "src/simple-event-handler.js",
   "scripts": {
-    "test": "karma start karma.conf.js && mocha -R spec test/module.test.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest run --coverage",
     "build": "rollup -c",
     "build:watch": "rollup -c --watch",
     "clean": "rm -rf dist",
@@ -35,14 +38,10 @@
   "homepage": "https://github.com/vlavrynovych/event-handler#readme",
   "devDependencies": {
     "@rollup/plugin-terser": "^0.4.4",
-    "angular": "^1.8.3",
-    "angular-mocks": "^1.8.3",
-    "jasmine-core": "^5.1.0",
-    "karma": "^6.4.4",
-    "karma-chrome-launcher": "^3.2.0",
-    "karma-coverage": "^2.2.1",
-    "karma-jasmine": "^5.1.0",
-    "mocha": "^10.7.3",
-    "rollup": "^4.56.0"
+    "@vitest/coverage-v8": "^4.0.18",
+    "@vitest/ui": "^4.0.18",
+    "jsdom": "^27.4.0",
+    "rollup": "^4.56.0",
+    "vitest": "^4.0.18"
   }
 }
