@@ -4,6 +4,14 @@ module.exports = function(config) {
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: '',
 
+    // plugins
+    plugins: [
+      'karma-jasmine',
+      'karma-chrome-launcher',
+      'karma-coverage',
+      'karma-coveralls'
+    ],
+
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
@@ -63,8 +71,14 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    // browsers: ['PhantomJS', 'Chrome'],
-    browsers: ['PhantomJS'],
+    browsers: process.env.CI ? ['ChromeHeadlessCI'] : ['ChromeHeadless'],
+
+    customLaunchers: {
+      ChromeHeadlessCI: {
+        base: 'ChromeHeadless',
+        flags: ['--no-sandbox', '--disable-gpu', '--disable-dev-shm-usage']
+      }
+    },
 
 
     // Continuous Integration mode
