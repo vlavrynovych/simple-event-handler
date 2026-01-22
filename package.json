@@ -5,7 +5,10 @@
   "main": "src/simple-event-handler.js",
   "scripts": {
     "test": "karma start karma.conf.js && mocha -R spec test/module.test.js",
-    "build": "gulp build",
+    "build": "rollup -c",
+    "build:watch": "rollup -c --watch",
+    "clean": "rm -rf dist",
+    "prebuild": "npm run clean && mkdir -p dist",
     "prepublishOnly": "npm test && npm run build"
   },
   "files": [
@@ -31,19 +34,15 @@
   },
   "homepage": "https://github.com/vlavrynovych/event-handler#readme",
   "devDependencies": {
+    "@rollup/plugin-terser": "^0.4.4",
     "angular": "^1.8.3",
     "angular-mocks": "^1.8.3",
-    "del": "^6.1.1",
-    "gulp": "^5.0.0",
-    "gulp-concat": "^2.6.1",
-    "gulp-rename": "^2.0.0",
-    "gulp-sourcemaps": "^3.0.0",
-    "gulp-uglify": "^3.0.2",
     "jasmine-core": "^5.1.0",
     "karma": "^6.4.4",
     "karma-chrome-launcher": "^3.2.0",
     "karma-coverage": "^2.2.1",
     "karma-jasmine": "^5.1.0",
-    "mocha": "^10.7.3"
+    "mocha": "^10.7.3",
+    "rollup": "^4.56.0"
   }
 }
