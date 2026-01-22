@@ -28,7 +28,7 @@
     "angular-mocks": "1.6.2",
     "bower": "1.7.9",
     "del": "2.2.0",
-    "gulp": "gulpjs/gulp#4.0",
+    "gulp": "^5.0.0",
     "gulp-concat": "2.6.0",
     "gulp-rename": "1.2.2",
     "gulp-sourcemaps": "2.4.0",
