@@ -9,11 +9,12 @@
     "test:watch": "vitest",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest run --coverage",
+    "test:types": "tsc test-types.ts --noEmit",
     "build": "rollup -c",
     "build:watch": "rollup -c --watch",
     "clean": "rm -rf dist",
     "prebuild": "npm run clean && mkdir -p dist",
-    "prepublishOnly": "npm test && npm run build"
+    "prepublishOnly": "npm test && npm run test:types && npm run build"
   },
   "files": [
     "src/",
