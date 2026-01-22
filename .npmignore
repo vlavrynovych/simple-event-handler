@@ -15,6 +15,7 @@ coverage/
 .github/
 tasks/
 .claude/
+.husky/
 
 # IDE
 .vscode/
@@ -35,6 +36,9 @@ yarn-error.log*
 .nvmrc
 vitest.config.mjs
 rollup.config.mjs
+eslint.config.mjs
+.prettierrc
+.prettierignore
 karma.conf.js
 tsconfig.json
 

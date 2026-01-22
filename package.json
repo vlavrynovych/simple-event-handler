@@ -31,7 +31,7 @@
     "build:watch": "rollup -c --watch",
     "clean": "rm -rf dist",
     "prebuild": "npm run clean",
-    "prepare": "npm run build",
+    "prepare": "husky",
     "prepublishOnly": "npm test && npm run test:types && npm run build"
   },
   "files": [
@@ -79,9 +79,17 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.5",
     "happy-dom": "^20.3.4",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
     "prettier": "^3.8.1",
     "rollup": "^4.56.0",
     "typescript": "^5.9.3",
     "vitest": "^4.0.18"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   }
 }
