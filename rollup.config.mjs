@@ -10,7 +10,7 @@ const banner = `/**
  */`;
 
 export default [
-  // Unminified build
+  // UMD build (unminified)
   {
     input: 'src/simple-event-handler.js',
     output: {
@@ -22,7 +22,7 @@ export default [
       exports: 'auto'
     }
   },
-  // Minified build
+  // UMD build (minified)
   {
     input: 'src/simple-event-handler.js',
     output: {
@@ -37,6 +37,16 @@ export default [
           comments: /^!/
         }
       })]
+    }
+  },
+  // ES Module build
+  {
+    input: 'src/simple-event-handler.js',
+    output: {
+      file: 'dist/simple-event-handler.esm.js',
+      format: 'es',
+      banner,
+      sourcemap: true
     }
   }
 ];

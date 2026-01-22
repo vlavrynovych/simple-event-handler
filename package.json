@@ -1,9 +1,22 @@
 {
   "name": "simple-event-handler",
   "version": "1.0.0",
-  "description": "Event handler library for both: frontend and backend",
-  "main": "src/simple-event-handler.js",
+  "description": "Lightweight, framework-agnostic event handler library for both browser and Node.js environments",
+  "type": "commonjs",
+  "main": "dist/simple-event-handler.js",
+  "module": "dist/simple-event-handler.esm.js",
   "types": "src/simple-event-handler.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/simple-event-handler.d.ts",
+      "import": "./dist/simple-event-handler.esm.js",
+      "require": "./dist/simple-event-handler.js",
+      "default": "./dist/simple-event-handler.js"
+    }
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
     "test": "vitest run",
     "test:watch": "vitest",
@@ -13,7 +26,8 @@
     "build": "rollup -c",
     "build:watch": "rollup -c --watch",
     "clean": "rm -rf dist",
-    "prebuild": "npm run clean && mkdir -p dist",
+    "prebuild": "npm run clean",
+    "prepare": "npm run build",
     "prepublishOnly": "npm test && npm run test:types && npm run build"
   },
   "files": [
@@ -24,20 +38,35 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vlavrynovych/event-handler.git"
+    "url": "git+https://github.com/vlavrynovych/simple-event-handler.git"
   },
   "keywords": [
     "event",
     "handler",
+    "emitter",
     "subscriber",
-    "subscription"
+    "subscription",
+    "pubsub",
+    "pub-sub",
+    "event-emitter",
+    "event-bus",
+    "observer",
+    "lightweight",
+    "zero-dependencies",
+    "typescript",
+    "browser",
+    "nodejs"
   ],
   "author": "Volodymyr Lavrynovych <volodyalavrynovych@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/vlavrynovych/event-handler/issues"
+    "url": "https://github.com/vlavrynovych/simple-event-handler/issues"
   },
-  "homepage": "https://github.com/vlavrynovych/event-handler#readme",
+  "homepage": "https://github.com/vlavrynovych/simple-event-handler#readme",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "devDependencies": {
     "@rollup/plugin-terser": "^0.4.4",
     "@vitest/coverage-v8": "^4.0.18",

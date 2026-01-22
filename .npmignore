@@ -3,6 +3,9 @@ test/
 test-types.ts
 *.test.js
 *.test.ts
+test-*.js
+test-*.mjs
+test-*.cjs
 
 # Build artifacts
 coverage/
@@ -16,6 +19,16 @@ tasks/
 # IDE
 .vscode/
 .idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
 # Config files
 .editorconfig
@@ -23,3 +36,8 @@ tasks/
 vitest.config.mjs
 rollup.config.mjs
 karma.conf.js
+tsconfig.json
+
+# Legacy
+.travis.yml
+gulpfile.js
