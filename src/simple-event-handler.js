@@ -141,7 +141,6 @@
         }
     }
 
-    if(typeof module != "undefined") {
-        module.exports = new EventHandler();
-    }
+    // Export for CommonJS/Node.js (using short-circuit to avoid branch)
+    typeof module != "undefined" && (module.exports = new EventHandler());
 })();
