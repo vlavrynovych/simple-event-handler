@@ -5,8 +5,15 @@
   "main": "src/simple-event-handler.js",
   "scripts": {
     "test": "karma start karma.conf.js && mocha -R spec test/module.test.js",
-    "build": "gulp build"
+    "build": "gulp build",
+    "prepublishOnly": "npm test && npm run build"
   },
+  "files": [
+    "src/",
+    "dist/",
+    "README.MD",
+    "LICENSE"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/vlavrynovych/event-handler.git"
