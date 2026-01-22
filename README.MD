@@ -26,13 +26,7 @@ Perfect for managing application-wide events, component communication, real-time
 
 - [Installation](#installation)
 - [Quick Start](#quick-start)
-- [Usage Examples](#usage-examples)
-  - [Node.js / CommonJS](#nodejs--commonjs)
-  - [ES Modules](#es-modules)
-  - [TypeScript](#typescript)
-  - [React](#react)
-  - [Vue](#vue)
-- [Method Chaining](#method-chaining)
+- [Examples](EXAMPLES.md) 📚
 - [API Documentation](API.md) 📖
 - [License](#license)
 
@@ -76,126 +70,28 @@ eventHandler.subscribe('user:login', (user) => {
 eventHandler.fire('user:login', { name: 'John Doe' });
 ```
 
-## Usage Examples
+## Examples
 
-### Node.js / CommonJS
+For comprehensive usage examples including React, Vue, TypeScript, and more, see [EXAMPLES.md](EXAMPLES.md).
+
+**Quick examples:**
 
 ```javascript
+// Node.js / CommonJS
 const eventHandler = require('simple-event-handler');
+eventHandler.subscribe('event', (data) => console.log(data));
+eventHandler.fire('event', { message: 'Hello!' });
 
-eventHandler.subscribe('data:updated', (data) => {
-  console.log('Data updated:', data);
-});
-
-eventHandler.fire('data:updated', { id: 123, value: 'New Value' });
-```
-
-### ES Modules
-
-```javascript
+// ES Modules / TypeScript
 import eventHandler from 'simple-event-handler';
+eventHandler.on('notification', (msg) => console.log(msg));
+eventHandler.emit('notification', 'Hello from ESM!');
 
-eventHandler.on('notification', (message) => {
-  console.log(message);
-});
-
-eventHandler.emit('notification', 'Hello from ES modules!');
-```
-
-### TypeScript
-
-```typescript
-import eventHandler, { EventHandler } from 'simple-event-handler';
-
-interface User {
-  id: number;
-  name: string;
-}
-
-// Type-safe event handling
-eventHandler.subscribe<User>('user:created', (user) => {
-  console.log(`User ${user.name} created with ID ${user.id}`);
-});
-
-eventHandler.fire<User>('user:created', { id: 1, name: 'Alice' });
-
-// Create custom instance
-const customHandler = new EventHandler();
-customHandler.on<string>('message', (msg) => {
-  console.log(msg.toUpperCase());
-});
-```
-
-### React
-
-```jsx
-import { useEffect } from 'react';
-import eventHandler from 'simple-event-handler';
-
-function NotificationComponent() {
-  useEffect(() => {
-    const handler = (notification) => {
-      console.log('Notification:', notification);
-    };
-
-    eventHandler.subscribe('notification', handler);
-
-    // Cleanup on unmount
-    return () => {
-      eventHandler.unsubscribe('notification', handler);
-    };
-  }, []);
-
-  const sendNotification = () => {
-    eventHandler.fire('notification', { message: 'Hello from React!' });
-  };
-
-  return <button onClick={sendNotification}>Send Notification</button>;
-}
-```
-
-### Vue
-
-```vue
-<template>
-  <button @click="sendUpdate">Send Update</button>
-</template>
-
-<script setup>
-import { onMounted, onUnmounted } from 'vue';
-import eventHandler from 'simple-event-handler';
-
-const handleUpdate = (data) => {
-  console.log('Update received:', data);
-};
-
-onMounted(() => {
-  eventHandler.subscribe('data:update', handleUpdate);
-});
-
-onUnmounted(() => {
-  eventHandler.unsubscribe('data:update', handleUpdate);
-});
-
-const sendUpdate = () => {
-  eventHandler.fire('data:update', { timestamp: Date.now() });
-};
-</script>
-```
-
-## Method Chaining
-
-All methods return `this` for fluent API chaining:
-
-```javascript
-const handler = new EventHandler();
-
-handler
-  .once('init', () => console.log('Initialized'))
+// Method chaining
+eventHandler
   .subscribe('update', (data) => console.log(data))
-  .fire('init')
   .fire('update', { value: 42 })
-  .unsubscribeAll('init');
+  .unsubscribeAll('update');
 ```
 
 ## API Documentation

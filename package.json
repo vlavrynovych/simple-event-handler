@@ -38,6 +38,8 @@
     "src/",
     "dist/",
     "README.MD",
+    "API.md",
+    "EXAMPLES.md",
     "LICENSE"
   ],
   "repository": {
