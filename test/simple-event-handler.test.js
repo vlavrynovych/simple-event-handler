@@ -28,7 +28,9 @@ describe('Node.js module.exports', () => {
 
         // Test basic functionality
         let result = false;
-        const handler = () => { result = true; };
+        const handler = () => {
+            result = true;
+        };
 
         eventHandler.subscribe('test-event', handler);
         eventHandler.fire('test-event');
@@ -66,7 +68,9 @@ describe('EventHandler', () => {
         it('subscribe, fire, and unsubscribe', () => {
             // given:
             let result = false;
-            const handler = () => { result = true; };
+            const handler = () => {
+                result = true;
+            };
 
             // when:
             eventHandler.subscribe(EVENT_NAME, handler);
@@ -90,7 +94,9 @@ describe('EventHandler', () => {
         it('on, emit, and off aliases', () => {
             // given:
             let result = false;
-            const handler = () => { result = true; };
+            const handler = () => {
+                result = true;
+            };
 
             // when:
             eventHandler.on(EVENT_NAME, handler);
@@ -233,7 +239,9 @@ describe('EventHandler', () => {
         it('multi-subscribe: success', () => {
             // given:
             let result = false;
-            const handler = () => { result = true; };
+            const handler = () => {
+                result = true;
+            };
 
             // when:
             eventHandler.subscribe([EVENT_NAME, EVENT_NAME_2], handler);
@@ -271,8 +279,7 @@ describe('EventHandler', () => {
          */
         it('multi-subscribe: fail', () => {
             // given:
-            let result = false;
-            const handler = () => { result = true; };
+            const handler = () => {};
 
             // when: incorrect name
             expect(() => {
@@ -378,7 +385,9 @@ describe('EventHandler', () => {
         it('multi-subscribe: success', () => {
             // given:
             let result = false;
-            const handler = () => { result = true; };
+            const handler = () => {
+                result = true;
+            };
 
             // when:
             eventHandler.once([EVENT_NAME, EVENT_NAME_2], handler);
@@ -470,16 +479,20 @@ describe('EventHandler', () => {
                     if (eventName === '$destroy') {
                         savedDestroyCallback = callback;
                     }
-                }
+                },
             };
 
             expect(savedDestroyCallback).toBe(null);
 
             // when: subscribe with $scope
             let result = false;
-            eventHandler.subscribe('test-event', () => {
-                result = true;
-            }, $scope);
+            eventHandler.subscribe(
+                'test-event',
+                () => {
+                    result = true;
+                },
+                $scope
+            );
 
             // then:
             expect(result).toBe(false);
@@ -549,8 +562,12 @@ describe('EventHandler', () => {
         it('multi-subscribe and unsubscribe all', () => {
             // given:
             let result = 0;
-            const handler = () => { result = 1; };
-            const handler2 = () => { result = 2; };
+            const handler = () => {
+                result = 1;
+            };
+            const handler2 = () => {
+                result = 2;
+            };
 
             // when:
             eventHandler.subscribe([EVENT_NAME, EVENT_NAME_2], handler);
@@ -691,7 +708,7 @@ describe('EventHandler', () => {
         it('with data: shared between subscribers', () => {
             // given:
             const data = {
-                counter: 0
+                counter: 0,
             };
 
             eventHandler.subscribe(EVENT_NAME, (data) => {
@@ -713,7 +730,7 @@ describe('EventHandler', () => {
         it('if one of the callbacks throws the exception', () => {
             // given:
             const data = {
-                counter: 0
+                counter: 0,
             };
 
             // when:
@@ -721,7 +738,7 @@ describe('EventHandler', () => {
                 data.counter++;
             });
 
-            eventHandler.subscribe(EVENT_NAME, (data) => {
+            eventHandler.subscribe(EVENT_NAME, (_data) => {
                 throw new Error('something went wrong inside one of the subscribers');
             });
 
@@ -779,7 +796,6 @@ describe('EventHandler', () => {
                     .fire(EVENT_NAME_2, 3) // result = 27 + 3 = 30
                     .unsubscribe(EVENT_NAME_2, handler)
                     .fire(EVENT_NAME_2, 20); // no handlers to execute
-
             }).not.toThrow();
 
             // then:

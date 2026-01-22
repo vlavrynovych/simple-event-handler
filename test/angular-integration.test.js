@@ -3,7 +3,7 @@
  * This file must set up Angular BEFORE importing the source to test line 140
  */
 
-import { describe, it, expect, vi, beforeAll } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 
 describe('Angular integration', () => {
     /**
@@ -12,11 +12,11 @@ describe('Angular integration', () => {
     it('should register Angular module when angular is available', async () => {
         // given: Mock Angular BEFORE importing source
         const mockModule = {
-            service: vi.fn().mockReturnThis()
+            service: vi.fn().mockReturnThis(),
         };
 
         window.angular = {
-            module: vi.fn().mockReturnValue(mockModule)
+            module: vi.fn().mockReturnValue(mockModule),
         };
 
         // when: Import the source (this will execute the IIFE)

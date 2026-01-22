@@ -1,7 +1,7 @@
 'use strict';
-(function() {
+(function () {
     function EventHandler() {
-        var subscriptions = {};
+        const subscriptions = {};
 
         this.subscribe = subscribe;
         this.on = subscribe;
@@ -20,12 +20,12 @@
         function subscribe(events, fn, $scope) {
             validateCallback(fn);
 
-            if(events) {
-                if(typeof events == 'string') {
+            if (events) {
+                if (typeof events === 'string') {
                     validateName(events);
                     _subscribe(events, fn, $scope);
-                } else if(events instanceof Array) {
-                    if(!events.length) {
+                } else if (events instanceof Array) {
+                    if (!events.length) {
                         throwNameError();
                     }
 
@@ -50,33 +50,35 @@
 
             subscriptions[name].push(fn);
 
-            $scope && $scope.$on && $scope.$on('$destroy', function () {
-                unsubscribe(name, fn);
-            });
+            $scope &&
+                $scope.$on &&
+                $scope.$on('$destroy', function () {
+                    unsubscribe(name, fn);
+                });
         }
 
         function once(events, fn, $scope) {
             validateCallback(fn);
 
-            if(events) {
-                if(typeof events == 'string') {
+            if (events) {
+                if (typeof events === 'string') {
                     validateName(events);
 
-                    var handler = function () {
+                    const handler = function (data) {
                         unsubscribe(events, handler);
-                        fn();
+                        fn(data);
                     };
                     _subscribe(events, handler, $scope);
-                } else if(events instanceof Array) {
-                    if(!events.length) {
+                } else if (events instanceof Array) {
+                    if (!events.length) {
                         throwNameError();
                     }
 
                     events.forEach(validateName);
                     events.forEach(function (eventName) {
-                        var handler = function () {
+                        const handler = function (data) {
                             unsubscribe(eventName, handler);
-                            fn();
+                            fn(data);
                         };
 
                         _subscribe(eventName, handler, $scope);
@@ -92,10 +94,12 @@
         }
 
         function fire(name, args) {
-            if (!subscriptions[name]) return;
+            if (!subscriptions[name]) {
+                return this;
+            }
 
             subscriptions[name].forEach(function (fn) {
-                fn(args != undefined ? args : {}); // empty object can be used as a shared storage
+                fn(args !== undefined ? args : {}); // empty object can be used as a shared storage
             });
 
             return this;
@@ -104,20 +108,28 @@
         function unsubscribe(name, fn) {
             validateName(name);
             validateCallback(fn);
-            if (!subscriptions[name]) return;
-            subscriptions[name].splice(subscriptions[name].indexOf(fn), 1);
+            if (!subscriptions[name]) {
+                return this;
+            }
+
+            const index = subscriptions[name].indexOf(fn);
+            if (index !== -1) {
+                subscriptions[name].splice(index, 1);
+            }
             return this;
         }
 
         function unsubscribeAll(name) {
             validateName(name);
-            if (!subscriptions[name]) return;
+            if (!subscriptions[name]) {
+                return this;
+            }
             subscriptions[name] = [];
             return this;
         }
-        
+
         function validateName(name) {
-            if (!name || typeof name != 'string') {
+            if (!name || typeof name !== 'string') {
                 throwNameError();
             }
         }
@@ -133,14 +145,14 @@
         }
     }
 
-    if(typeof window != "undefined") {
+    if (typeof window !== 'undefined') {
         window.EventHandler = EventHandler;
 
-        if(window.angular) {
+        if (window.angular) {
             angular.module('simple-event-handler', []).service('$eventHandler', EventHandler);
         }
     }
 
     // Export for CommonJS/Node.js (using short-circuit to avoid branch)
-    typeof module != "undefined" && (module.exports = new EventHandler());
+    typeof module !== 'undefined' && (module.exports = new EventHandler());
 })();

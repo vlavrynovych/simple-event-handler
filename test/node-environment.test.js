@@ -28,7 +28,9 @@ describe('Node.js module.exports', () => {
 
         // Test basic functionality
         let result = false;
-        const handler = () => { result = true; };
+        const handler = () => {
+            result = true;
+        };
 
         eventHandler.subscribe('test-event', handler);
         eventHandler.fire('test-event');
