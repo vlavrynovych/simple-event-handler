@@ -1,337 +1,214 @@
 # simple-event-handler
 
-[![GitHub issues](https://img.shields.io/github/issues/vlavrynovych/simple-event-handler.svg)](https://github.com/vlavrynovych/simple-event-handler/issues)
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/vlavrynovych/simple-event-handler/develop/LICENSE)
-[![NPM Version][npm-image]][npm-url]
-[![NPM Downloads][downloads-image]][downloads-url]
+A lightweight, framework-agnostic event handler library for both **front-end** and **back-end** JavaScript applications. Implement the pub/sub (publisher-subscriber) pattern to decouple your code and enable event-driven architecture. Works seamlessly in browsers, Node.js, and modern JavaScript frameworks like React, Vue, and Angular.
+
+Perfect for managing application-wide events, component communication, real-time updates, and building loosely coupled, maintainable codebases.
+
 [![Test](https://github.com/vlavrynovych/simple-event-handler/actions/workflows/test.yml/badge.svg)](https://github.com/vlavrynovych/simple-event-handler/actions/workflows/test.yml)
 [![Coverage Status](https://coveralls.io/repos/github/vlavrynovych/simple-event-handler/badge.svg?branch=develop)](https://coveralls.io/github/vlavrynovych/simple-event-handler?branch=develop)
+[![NPM Version](https://img.shields.io/npm/v/simple-event-handler.svg)](https://npmjs.org/package/simple-event-handler)
+[![NPM Downloads](https://img.shields.io/npm/dm/simple-event-handler.svg)](https://npmjs.org/package/simple-event-handler)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Bundle Size](https://img.shields.io/bundlephobia/minzip/simple-event-handler)](https://bundlephobia.com/package/simple-event-handler)
 
-[![NPM](https://nodei.co/npm/simple-event-handler.png?downloads=true)](https://nodei.co/npm/simple-event-handler/)
+## Features
 
-[npm-image]: https://img.shields.io/npm/v/simple-event-handler.svg?style=flat
-[npm-url]: https://npmjs.org/package/simple-event-handler
-[downloads-image]: https://img.shields.io/npm/dm/simple-event-handler.svg?style=flat
-[downloads-url]: https://npmjs.org/package/simple-event-handler
+- 🚀 **Lightweight** - Less than 2KB minified
+- 🔧 **Zero Dependencies** - No external requirements
+- 💪 **TypeScript** - Full type definitions included
+- 🌐 **Universal** - Works in browser and Node.js
+- ⚡ **Fast** - Optimized for performance
+- 🔗 **Method Chaining** - Fluent API support
+- 📦 **Multiple Formats** - UMD, CommonJS, ES Module
+- ✅ **100% Test Coverage** - Thoroughly tested
 
-Event handler library for both: **front-end** and **back-end**
+## Table of Contents
 
-# Table of Contents
 - [Installation](#installation)
-    - [npm](#npm)
-- [Examples](#examples)
+- [Quick Start](#quick-start)
+- [Usage Examples](#usage-examples)
+  - [Node.js / CommonJS](#nodejs--commonjs)
+  - [ES Modules](#es-modules)
+  - [TypeScript](#typescript)
+  - [React](#react)
+  - [Vue](#vue)
 - [Method Chaining](#method-chaining)
-- [Documentation](#documentation)
-    - [#subscribe(eventName, handler, $scope)](#subscribe)
-    - [#fire(eventName, args)](#fire)
-    - [#unsubscribe(eventName, handler)](#unsubscribe)
-    - [#unsubscribeAll(eventName)](#unsubscribeall)
-    - [#once(eventName, handler, $scope)](#once)
-    - [#on(eventName, handler)](#on)
-    - [#emit(eventName)](#emit)
-    - [#off(eventName, handler)](#off)
-    - [#offAll(eventName)](#offall)
-
+- [API Documentation](API.md) 📖
 - [License](#license)
 
-# Installation
-Include File
+## Installation
+
+### npm
+
+```bash
+npm install simple-event-handler
+```
+
+### yarn
+
+```bash
+yarn add simple-event-handler
+```
+
+### pnpm
+
+```bash
+pnpm add simple-event-handler
+```
+
+### CDN
 
 ```html
-<script type="text/javascript" src=".../js/simple-event-handler.min.js"></script>
+<script src="https://unpkg.com/simple-event-handler/dist/simple-event-handler.min.js"></script>
 ```
 
+## Quick Start
 
-Add simple-event-handler in your angular app to your module.
+```javascript
+import eventHandler from 'simple-event-handler';
 
-```js
-angular.module('app', ['simple-event-handler']);
+// Subscribe to an event
+eventHandler.subscribe('user:login', (user) => {
+  console.log('User logged in:', user.name);
+});
+
+// Fire the event
+eventHandler.fire('user:login', { name: 'John Doe' });
 ```
 
-## npm
-Install via [npm](https://www.npmjs.com/)
+## Usage Examples
 
-`npm install --save simple-event-handler`
+### Node.js / CommonJS
 
-# Examples
+```javascript
+const eventHandler = require('simple-event-handler');
 
-###### AngularJS Example
+eventHandler.subscribe('data:updated', (data) => {
+  console.log('Data updated:', data);
+});
 
-**app.run.js**
-
-```js
-angular
-    .module('app', ['simple-event-handler'])
-    .run(['$eventHandler', function ($eventHandler) {
-        $eventHandler.subscribe('my-event', function(data) {
-            // your logic here
-        })
-    }]);
+eventHandler.fire('data:updated', { id: 123, value: 'New Value' });
 ```
 
-**app.controller.js**
+### ES Modules
 
-```js
-angular
-    .module('app')
-    .controller('MainController', ['$eventHandler', function ($eventHandler) {
-        var args = {name: 'some name'}
-        $eventHandler.fire('my-event', args);
-    }]);
+```javascript
+import eventHandler from 'simple-event-handler';
+
+eventHandler.on('notification', (message) => {
+  console.log(message);
+});
+
+eventHandler.emit('notification', 'Hello from ES modules!');
 ```
 
-###### Node.js Example
+### TypeScript
 
-```js
-var eventHandler = require('simple-event-handler');
+```typescript
+import eventHandler, { EventHandler } from 'simple-event-handler';
 
-eventHandler.subscribe('my-event', function(data) {
-    // your logic here
-})
-
-...
-
-var args = {name: 'some name'}
-eventHandler.fire('my-event', args);
-```
-
-###### Basic Example
-
-```js
-var eventHandler = new EventHandler();
-
-eventHandler.subscribe('my-event', function(data) {
-    // your logic here
-})
-
-...
-
-var args = {name: 'some name'}
-eventHandler.fire('my-event', args);
-```
-
-# Method Chaining
-
-It's just a nice feature to have ability to create a chains like this:
-
-```js
-var result = 0;
-var handler = function (data) {
-    result = result + data;
-};
-
-eventHandler
-    .once(EVENT_NAME, function () {
-        result++;
-    })
-    .fire(EVENT_NAME) // result = 1
-    .fire(EVENT_NAME) // result = 1
-    .subscribe(EVENT_NAME, handler)
-    .emit(EVENT_NAME, 10) // result = 11
-    .on(EVENT_NAME, function (data) {
-        result = result * 2 - data;
-    })
-    .fire(EVENT_NAME, 5) // result = ((11 + 5) * 2) - 5 = 27
-    .offAll(EVENT_NAME) // removes everything
-    .emit(EVENT_NAME) // no handlers to execute
-    .fire(EVENT_NAME) // no handlers to execute
-    .on(EVENT_NAME_2, handler)
-    .fire(EVENT_NAME_2, 3) // result = 27 + 3 = 30
-    .unsubscribe(EVENT_NAME_2, handler)
-    .fire(EVENT_NAME_2, 20); // no handlers to execute
-
-console.log(result); // --> 30
-```
-
-# Documentation
-
-## subscribe
-
-Registers new handler function to subscription list for the event named `eventName`.
-The handler will be added to the end of the subscription list.
-
-**Params**
-
-| Name | Type | Description |
-|:-----|:----:|:-----|
-| eventName | `String|Array<String>` | String or array of strings with event name(s) |
-| handler | `Function` | Function with your logic which will be called once event(s) is fired |
-| $scope | `Object` | AngularJS $scope object |
-
-Handler function has one input parameter with data object which can be passed via [#fire(eventName, handler)](#fire) method
-
-###### Example
-
-**Basic subscription**
-
-```js
-eventHandler.subscribe('my-event', function(data) {
-    // your logic here
-})
-```
-
-**Multi-subscription**
-
-```js
-var events = ['ev1', 'ev2', 'custom-event', 'service:update'];
-
-eventHandler.subscribe(events, function(data) {
-    // your logic here
-})
-```
-
-
-## fire
-
-Synchronously calls each of the handlers registered for the event named `eventName`,
-in the order they were registered, passing the supplied arguments to each,
-empty object will be passed instead if nothing provided
-
-| Name | Type | Description |
-|:-----|:----:|:-----|
-| eventName | `String` | Event name to fire |
-| args | `*` | args that will be passed to each handler function. Can be used as shared resource if it is not a primitive value. Default: `{}` |
-
-###### Example
-
-```js
-eventHandler.subscribe('report:update', function(data) {
-    // your logic here
-    console.log(data.id); // --> 44
-})
-
-var report = {
-    id: 44,
-    title: 'Cost Report',
-    isPrivate: false,
-    storeInDB: false
-};
-
-eventHandler.fire('report:update', report);
-```
-
-## unsubscribe
-
-Removes registered handler function from subscription list
-
-| Name | Type | Description |
-|:-----|:----:|:-----|
-| eventName | `String` | Event name on which handler was subscribed |
-| handler | `Function` | Handler function which should be removed from subscription list |
-
-###### Example
-
-```js
-var handler = function(data) {
-  // your logic here
+interface User {
+  id: number;
+  name: string;
 }
 
-eventHandler.subscribe('my-event', handler);
-
-eventHandler.fire('my-event');
-
-eventHandler.unsubscribe('my-event', handler)
-```
-
-## unsubscribeAll
-
-Removes all the registered handler functions for the event named `eventName`
-
-| Name | Type | Description |
-|:-----|:----:|:-----|
-| eventName | `String` | Event name for which subscription list should be cleaned |
-
-###### Example
-
-```js
-eventHandler.subscribe('my-event', function() {
-    // handler #1
+// Type-safe event handling
+eventHandler.subscribe<User>('user:created', (user) => {
+  console.log(`User ${user.name} created with ID ${user.id}`);
 });
 
-eventHandler.subscribe('my-event', function() {
-    // handler #2
+eventHandler.fire<User>('user:created', { id: 1, name: 'Alice' });
+
+// Create custom instance
+const customHandler = new EventHandler();
+customHandler.on<string>('message', (msg) => {
+  console.log(msg.toUpperCase());
+});
+```
+
+### React
+
+```jsx
+import { useEffect } from 'react';
+import eventHandler from 'simple-event-handler';
+
+function NotificationComponent() {
+  useEffect(() => {
+    const handler = (notification) => {
+      console.log('Notification:', notification);
+    };
+
+    eventHandler.subscribe('notification', handler);
+
+    // Cleanup on unmount
+    return () => {
+      eventHandler.unsubscribe('notification', handler);
+    };
+  }, []);
+
+  const sendNotification = () => {
+    eventHandler.fire('notification', { message: 'Hello from React!' });
+  };
+
+  return <button onClick={sendNotification}>Send Notification</button>;
+}
+```
+
+### Vue
+
+```vue
+<template>
+  <button @click="sendUpdate">Send Update</button>
+</template>
+
+<script setup>
+import { onMounted, onUnmounted } from 'vue';
+import eventHandler from 'simple-event-handler';
+
+const handleUpdate = (data) => {
+  console.log('Update received:', data);
+};
+
+onMounted(() => {
+  eventHandler.subscribe('data:update', handleUpdate);
 });
 
-eventHandler.subscribe('my-event', function() {
-    // handler #3
+onUnmounted(() => {
+  eventHandler.unsubscribe('data:update', handleUpdate);
 });
 
-eventHandler.fire('my-event');
-
-eventHandler.unsubscribeAll('my-event')
+const sendUpdate = () => {
+  eventHandler.fire('data:update', { timestamp: Date.now() });
+};
+</script>
 ```
 
-## once
+## Method Chaining
 
-Adds a one time handler function for the event named `eventName`.
-Handler will be removed from subscription list after first execution
+All methods return `this` for fluent API chaining:
 
-**Params**
+```javascript
+const handler = new EventHandler();
 
-| Name | Type | Description |
-|:-----|:----:|:-----|
-| eventName | `String|Array<String>` | String or array of strings with event name(s) |
-| handler | `Function` | Function with your logic which will be called once event(s) is fired |
-| $scope | `Object` | AngularJS $scope object |
-
-Handler function has one input parameter with data object which can be passed via [#fire(eventName, handler)](#fire) method
-
-###### Example
-
-**Basic subscription**
-
-```js
-eventHandler.once('my-event', function(data) {
-    // your logic here
-})
+handler
+  .once('init', () => console.log('Initialized'))
+  .subscribe('update', (data) => console.log(data))
+  .fire('init')
+  .fire('update', { value: 42 })
+  .unsubscribeAll('init');
 ```
 
-**Multi-subscription**
+## API Documentation
 
-```js
-var events = ['ev1', 'ev2', 'custom-event', 'service:update'];
+For complete API reference, see [API.md](API.md).
 
-eventHandler.once(events, function(data) {
-    // your logic here
-})
-```
+**Quick Reference:**
+- [`subscribe(events, handler, $scope?)`](API.md#subscribeevents-handler-scope) / [`on()`](API.md#onevents-handler-scope) - Register event handler(s)
+- [`once(events, handler, $scope?)`](API.md#onceevents-handler-scope) - Register one-time handler
+- [`fire(name, args?)`](API.md#firename-args) / [`emit()`](API.md#emitname-args) - Trigger event
+- [`unsubscribe(name, handler)`](API.md#unsubscribename-handler) / [`off()`](API.md#offname-handler) - Remove specific handler
+- [`unsubscribeAll(name)`](API.md#unsubscribeallname) / [`offAll()`](API.md#offallname) - Remove all handlers
 
-## on
+## License
 
-Alias for [#subscribe(eventName, handler)](#subscribe)
-
-## emit
-
-Alias for [#fire(eventName, args)](#fire)
-
-## off
-
-Alias for [#unsubscribe(eventName, handler)](#unsubscribe)
-
-## offAll
-
-Alias for [#unsubscribeAll(eventName)](#unsubscribeall)
-
-# License
-
-MIT License
-
-Copyright (c) 2017 Volodymyr Lavrynovych
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+MIT - See [LICENSE](LICENSE) file for details.
