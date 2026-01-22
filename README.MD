@@ -3,7 +3,6 @@
 [![GitHub issues](https://img.shields.io/github/issues/vlavrynovych/simple-event-handler.svg)](https://github.com/vlavrynovych/simple-event-handler/issues)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/vlavrynovych/simple-event-handler/develop/LICENSE)
 [![NPM Version][npm-image]][npm-url]
-[![Bower](https://img.shields.io/bower/v/simple-event-handler.svg)]()
 [![NPM Downloads][downloads-image]][downloads-url]
 [![Test](https://github.com/vlavrynovych/simple-event-handler/actions/workflows/test.yml/badge.svg)](https://github.com/vlavrynovych/simple-event-handler/actions/workflows/test.yml)
 [![Coverage Status](https://coveralls.io/repos/github/vlavrynovych/simple-event-handler/badge.svg?branch=develop)](https://coveralls.io/github/vlavrynovych/simple-event-handler?branch=develop)
@@ -19,7 +18,6 @@ Event handler library for both: **front-end** and **back-end**
 
 # Table of Contents
 - [Installation](#installation)
-    - [Bower](#bower)
     - [npm](#npm)
 - [Examples](#examples)
 - [Method Chaining](#method-chaining)
@@ -49,11 +47,6 @@ Add simple-event-handler in your angular app to your module.
 ```js
 angular.module('app', ['simple-event-handler']);
 ```
-
-## Bower
-Install via [Bower](https://bower.io/)
-
-`bower install --save simple-event-handler`
 
 ## npm
 Install via [npm](https://www.npmjs.com/)
