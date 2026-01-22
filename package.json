@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Event handler library for both: frontend and backend",
   "main": "src/simple-event-handler.js",
+  "types": "src/simple-event-handler.d.ts",
   "scripts": {
     "test": "vitest run",
     "test:watch": "vitest",
@@ -42,6 +43,7 @@
     "@vitest/ui": "^4.0.18",
     "happy-dom": "^20.3.4",
     "rollup": "^4.56.0",
+    "typescript": "^5.9.3",
     "vitest": "^4.0.18"
   }
 }

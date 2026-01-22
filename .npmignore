@@ -1,0 +1,25 @@
+# Test files
+test/
+test-types.ts
+*.test.js
+*.test.ts
+
+# Build artifacts
+coverage/
+.nyc_output/
+
+# Development files
+.github/
+tasks/
+.claude/
+
+# IDE
+.vscode/
+.idea/
+
+# Config files
+.editorconfig
+.nvmrc
+vitest.config.mjs
+rollup.config.mjs
+karma.conf.js
