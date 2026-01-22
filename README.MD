@@ -28,6 +28,7 @@ Perfect for managing application-wide events, component communication, real-time
 - [Quick Start](#quick-start)
 - [Examples](EXAMPLES.md) 📚
 - [API Documentation](API.md) 📖
+- [Changelog](CHANGELOG.md) 📝
 - [License](#license)
 
 ## Installation
