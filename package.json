@@ -4,7 +4,7 @@
   "description": "Event handler library for both: frontend and backend",
   "main": "src/simple-event-handler.js",
   "scripts": {
-    "test": "node_modules/karma/bin/karma start karma.conf.js && node_modules/mocha/bin/mocha -R spec test/module.test.js",
+    "test": "karma start karma.conf.js && mocha -R spec test/module.test.js",
     "build": "gulp build"
   },
   "repository": {
@@ -24,22 +24,20 @@
   },
   "homepage": "https://github.com/vlavrynovych/event-handler#readme",
   "devDependencies": {
-    "angular": "1.5.5",
-    "angular-mocks": "1.6.2",
-    "del": "2.2.0",
+    "angular": "^1.8.3",
+    "angular-mocks": "^1.8.3",
+    "del": "^6.1.1",
     "gulp": "^5.0.0",
-    "gulp-concat": "2.6.0",
-    "gulp-rename": "1.2.2",
-    "gulp-sourcemaps": "2.4.0",
-    "gulp-uglify": "1.5.3",
-    "istanbul": "0.4.5",
-    "jasmine-core": "2.5.2",
-    "karma": "1.5.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-rename": "^2.0.0",
+    "gulp-sourcemaps": "^3.0.0",
+    "gulp-uglify": "^3.0.2",
+    "jasmine-core": "^5.1.0",
+    "karma": "^6.4.4",
     "karma-chrome-launcher": "^3.2.0",
-    "karma-coverage": "1.1.1",
-    "karma-coveralls": "1.1.2",
-    "karma-jasmine": "1.1.0",
-    "karma-mocha": "1.3.0",
-    "mocha": "3.2.0"
+    "karma-coverage": "^2.2.1",
+    "karma-coveralls": "^2.1.0",
+    "karma-jasmine": "^5.1.0",
+    "mocha": "^10.7.3"
   }
 }
